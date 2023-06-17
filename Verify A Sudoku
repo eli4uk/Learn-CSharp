@@ -44,25 +44,27 @@ namespace Verify_a_sudoku
             //checking validity of horizontal lines
             int[] sudokuDigitCount = new int[sudokuGrid.GetLength(0)];
             int[] oneLineKey = new int[9] {1, 1, 1, 1, 1, 1, 1, 1, 1};
-            bool SudokuState = false;
+            bool SudokuState = false; //You ddint use this a single time
 
             //verify sudoku horisontal line
             for (int i = 0; i < sudokuGrid.GetLength(0); i++)
             {
-                for (int j = 0; j < sudokuGrid.GetLength(0); j++)
+                for (int j = 0; j < sudokuGrid.GetLength(0); j++)  //You are telling me that j and i represents both the number of row? Acomodation problem
                 {
-                    sudokuDigitCount[sudokuGrid[i, j] - 1] = sudokuGrid[i, j];
+                    sudokuDigitCount[sudokuGrid[i, j] - 1] = sudokuGrid[i, j];   //Logic problem, think about this line, does it match ur key?
                 }
             }
+            //All right, you have created a sudokuDigitCount, and you're not gonna do anything with it? Just dirently jumpint to verifying vertical line, which directly overwrites the array you just created?
 
             //verify sudoku vertical line
             for (int j = 0; j < sudokuGrid.GetLength(0); j++)
             {
-                for (int i = 0; i < sudokuGrid.GetLength(0); i++)
+                for (int i = 0; i < sudokuGrid.GetLength(0); i++) //Same thing, both i and j has limit getLength(0), though they are supposed to be the two dimensions
                 {
-                    sudokuDigitCount[sudokuGrid[i, j] - 1] = sudokuGrid[i, j];
+                    sudokuDigitCount[sudokuGrid[i, j] - 1] = sudokuGrid[i, j]; //Same problem here as well
                 }
-                if (sudokuDigitCount[j - 1] != oneLineKey[1]) { break; }
+                //What? Logic problem
+                if (sudokuDigitCount[j - 1] != oneLineKey[1]) { break; } //Brackets non-necessary
             }
 
             //Sometimes soonTM  VVV
