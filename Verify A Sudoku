@@ -1,0 +1,76 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Verify_a_sudoku
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            //get input
+            Console.WriteLine("Please enter your sudoku puzzle starting from the top left. After the first row, continue on the second row and so on. Make sure to sepetate each digit with a comma");
+            string input = Console.ReadLine();
+            string[] numbers = input.Split(' ');
+            int[,] sudokuGrid = new int[9, 9];
+
+            //transform input to 9x9 sudoku grid
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                int row = i / sudokuGrid.GetLength(0);
+                int col = i % sudokuGrid.GetLength(1);
+                sudokuGrid[row, col] = int.Parse(numbers[i]);
+            }
+
+            //Print out sudoku
+            /*
+            Console.Clear();
+            Console.WriteLine("This is your entered Sudoku:");
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    Console.Write(sudokuGrid[i, j]+" ");
+                }
+                Console.WriteLine();
+            }
+            */
+
+            //checking validity of horizontal lines
+            int[] sudokuDigitCount = new int[sudokuGrid.GetLength(0)];
+            int[] oneLineKey = new int[9] {1, 1, 1, 1, 1, 1, 1, 1, 1};
+            bool SudokuState = false;
+
+            //verify sudoku horisontal line
+            for (int i = 0; i < sudokuGrid.GetLength(0); i++)
+            {
+                for (int j = 0; j < sudokuGrid.GetLength(0); j++)
+                {
+                    sudokuDigitCount[sudokuGrid[i, j] - 1] = sudokuGrid[i, j];
+                }
+            }
+
+            //verify sudoku vertical line
+            for (int j = 0; j < sudokuGrid.GetLength(0); j++)
+            {
+                for (int i = 0; i < sudokuGrid.GetLength(0); i++)
+                {
+                    sudokuDigitCount[sudokuGrid[i, j] - 1] = sudokuGrid[i, j];
+                }
+                if (sudokuDigitCount[j - 1] != oneLineKey[1]) { break; }
+            }
+
+            //Sometimes soonTM  VVV
+            //seperates sudoku into different parts like:
+            //A|B|C
+            //D|E|F
+            //G|H|I
+
+
+            Console.ReadLine();
+        }
+    }
+}
