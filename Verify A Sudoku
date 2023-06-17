@@ -5,6 +5,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
+//THIS IS MY MODIFICATION, ASKING FOR UR PERMISSINO TO SUBMIT
+
 namespace Verify_a_sudoku
 {
     internal class Program
