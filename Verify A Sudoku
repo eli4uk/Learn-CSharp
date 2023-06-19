@@ -5,8 +5,6 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-//THIS IS MY MODIFICATION, ASKING FOR UR PERMISSINO TO SUBMIT
-
 namespace Verify_a_sudoku
 {
     internal class Program
@@ -28,7 +26,7 @@ namespace Verify_a_sudoku
             }
 
             //Print out sudoku
-            /*
+            
             Console.Clear();
             Console.WriteLine("This is your entered Sudoku:");
             for (int i = 0; i < 9; i++)
@@ -39,42 +37,77 @@ namespace Verify_a_sudoku
                 }
                 Console.WriteLine();
             }
-            */
+            Console.WriteLine("==================");
 
-            //checking validity of horizontal lines
-            int[] sudokuDigitCount = new int[sudokuGrid.GetLength(0)];
+            //checking validity of lines=============================================================================================================
+            int[] sudokuDigitCount = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            int[] sudokuDigitCountReset = new int[9] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             int[] oneLineKey = new int[9] {1, 1, 1, 1, 1, 1, 1, 1, 1};
-            bool SudokuState = false; //You ddint use this a single time
+            bool lineIsValid = true;
 
-            //verify sudoku horisontal line
-            for (int i = 0; i < sudokuGrid.GetLength(0); i++)
+            for (int i = 0; i < sudokuGrid.GetLength(1); i++)
             {
-                for (int j = 0; j < sudokuGrid.GetLength(0); j++)  //You are telling me that j and i represents both the number of row? Acomodation problem
+                
+                for (int j = 0; j < sudokuGrid.GetLength(0); j++)
                 {
-                    sudokuDigitCount[sudokuGrid[i, j] - 1] = sudokuGrid[i, j];   //Logic problem, think about this line, does it match ur key?
+                    sudokuDigitCount[sudokuGrid[i, j] - 1]++;
+                }
+                for (int k = 0; k < sudokuDigitCount.GetLength(0); k++)
+                {
+                    if (sudokuDigitCount[k] != oneLineKey[k])
+                    {
+                        lineIsValid = false;
+                        break;
+                    }
+                    
+                }
+                sudokuDigitCount = sudokuDigitCountReset;
+            }
+            Console.WriteLine("line state: "+lineIsValid);
+
+            //verify small squares===================================================================================================================
+
+            //get small square array
+            int[][] smallerArrays = new int[9][];
+
+            for (int i = 0; i < sudokuGrid.GetLength(1); i++)
+            {
+                smallerArrays[i] = new int[9];
+                for (int j = 0; j < sudokuGrid.GetLength(0); j++)
+                {
+                    smallerArrays[i][j] = sudokuGrid[i / 3 * 3 + j / 3, i % 3 * 3 + j % 3];
                 }
             }
-            //All right, you have created a sudokuDigitCount, and you're not gonna do anything with it? Just dirently jumpint to verifying vertical line, which directly overwrites the array you just created?
 
-            //verify sudoku vertical line
-            for (int j = 0; j < sudokuGrid.GetLength(0); j++)
+            //verifty small square
+            bool smolSquareIsValid = true;
+            for (int i = 0; i < sudokuGrid.GetLength(1); i++)
             {
-                for (int i = 0; i < sudokuGrid.GetLength(0); i++) //Same thing, both i and j has limit getLength(0), though they are supposed to be the two dimensions
+                bool[] iForgorWhatThisWas = new bool[sudokuGrid.GetLength(0)];
+                for (int j = 0; j < sudokuGrid.GetLength(0); j++)
                 {
-                    sudokuDigitCount[sudokuGrid[i, j] - 1] = sudokuGrid[i, j]; //Same problem here as well
+                    int temp = smallerArrays[i][j];
+                    if (temp < 1 || temp > 9 || iForgorWhatThisWas[temp - 1])
+                    {
+                        smolSquareIsValid = false;
+                        break;
+                    }
+                    iForgorWhatThisWas[temp - 1] = true;
                 }
-                //What? Logic problem
-                if (sudokuDigitCount[j - 1] != oneLineKey[1]) { break; } //Brackets non-necessary
+                if (!smolSquareIsValid)
+                {
+                    break;
+                }
             }
 
-            //Sometimes soonTM  VVV
-            //seperates sudoku into different parts like:
-            //A|B|C
-            //D|E|F
-            //G|H|I
+            Console.WriteLine("the square state: " + smolSquareIsValid);
 
+
+            
 
             Console.ReadLine();
+
+
         }
     }
 }
