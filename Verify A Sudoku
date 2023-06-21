@@ -50,18 +50,23 @@ namespace Verify_a_sudoku
                 
                 for (int j = 0; j < sudokuGrid.GetLength(0); j++)
                 {
+                    
                     sudokuDigitCount[sudokuGrid[i, j] - 1]++;
                 }
                 for (int k = 0; k < sudokuDigitCount.GetLength(0); k++)
                 {
+                    
                     if (sudokuDigitCount[k] != oneLineKey[k])
-                    {
+                    { 
                         lineIsValid = false;
                         break;
                     }
                     
                 }
-                sudokuDigitCount = sudokuDigitCountReset;
+                for(int l = 0; l < sudokuDigitCount.GetLength(0); l++)
+                {
+                    sudokuDigitCount[l] = 0;
+                }
             }
             Console.WriteLine("line state: "+lineIsValid);
 
@@ -99,15 +104,11 @@ namespace Verify_a_sudoku
                     break;
                 }
             }
-
             Console.WriteLine("the square state: " + smolSquareIsValid);
-
-
             
-
+            if (smolSquareIsValid && lineIsValid) Console.WriteLine("Your sudoku is VALID");
+            else Console.WriteLine("Your sudoku is INVALID");
             Console.ReadLine();
-
-
         }
     }
 }
